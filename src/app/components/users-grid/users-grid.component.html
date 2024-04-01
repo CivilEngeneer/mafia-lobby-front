@@ -9,7 +9,6 @@
     <td mat-cell *matCellDef="let user"> {{ getName(user) }}</td>
   </ng-container>
 
-
   <ng-container matColumnDef="type">
     <th mat-header-cell *matHeaderCellDef> Type</th>
     <td mat-cell *matCellDef="let user">
@@ -39,6 +38,18 @@
       <button [hidden]="!user.role?.length" [disabled]="!isMaster() || user.opened" mat-icon-button matTooltip="Open player card" (click)="openPlayerCard(user)">
         <mat-icon>delete_outline</mat-icon>
       </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="note">
+    <th mat-header-cell *matHeaderCellDef> Note</th>
+    <td mat-cell *matCellDef="let user">
+      <mat-form-field>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"></textarea>
+      </mat-form-field>
     </td>
   </ng-container>
 

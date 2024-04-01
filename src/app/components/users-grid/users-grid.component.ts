@@ -14,7 +14,13 @@ export class UsersGridComponent {
   @Input() users: User[] = [];
   @Output() userChanged = new EventEmitter<User>();
 
-  displayedColumns: string[] = ['position', 'name', 'type', 'role', 'open'];
+  get displayedColumns(): string[] {
+    if (this.gameService?.thisUser?.type === "master"){
+      return ['position', 'name', 'type', 'role', 'note', 'open'];
+    }
+    return ['position', 'name', 'type', 'role', 'open'];
+  }
+
   userTypes: UserType[] = ["master", "player", "observer"];
 
   onUserTypeChanged(value: UserType, user: User) {
@@ -28,7 +34,7 @@ export class UsersGridComponent {
       return user.role?.toString();
     }
 
-    if (this.gameService.thisUser?.type === 'master' || this.gameService.thisUser?.id === user.id){
+    if (this.gameService.thisUser?.type === 'master' || this.gameService.thisUser?.id === user.id) {
       return user.role?.toString();
     }
 
