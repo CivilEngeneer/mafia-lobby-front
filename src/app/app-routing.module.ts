@@ -11,7 +11,7 @@ export const lobbyPath = `lobby`;
 
 const routes: Routes = [
   { path: '', component: JoinComponent, data: { title: 'Для подключения к игре введите свое имя', buttonName: 'Подключиться' }, canActivate: [CanActivateJoin] },
-  { path: lobbyPath, component: LobbyComponent, canActivate: [CanActivateGame] },
+  { path: lobbyPath, loadComponent: () => import('./components/lobby/lobby.component').then(m => m.LobbyComponent), canActivate: [CanActivateGame] },
   { path: '**', component: NotFoundComponent }
 ];
 

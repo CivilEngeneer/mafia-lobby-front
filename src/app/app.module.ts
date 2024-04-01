@@ -3,11 +3,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { LobbyComponent } from './components/lobby/lobby.component';
 import { JoinComponent } from "./components/join/join.component";
 import { HttpClientModule } from "@angular/common/http";
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -23,7 +21,6 @@ import { MatCardModule } from "@angular/material/card";
   declarations: [
     AppComponent,
     JoinComponent,
-    LobbyComponent,
     NotFoundComponent,
     UsersGridComponent,
     UsersGridComponent,
@@ -45,6 +42,10 @@ import { MatCardModule } from "@angular/material/card";
     MatCardModule
   ],
   providers: [],
+  exports: [
+    UsersGridComponent,
+    RolesGridComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
