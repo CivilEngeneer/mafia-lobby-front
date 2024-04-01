@@ -1,0 +1,5 @@
+<app-users-grid [users]="(users$ | async) || []" (userChanged)="onUserChanged($event)"></app-users-grid>
+<div class="right-side">
+  <button mat-flat-button  (click)="buttonClick()" [disabled]="isDisabled()">{{ getButtonTitle() }}</button>
+  <app-roles-grid [roleSettings]="(roleSettings$ | async) || []" (onRolesChanged)="onRolesChanged($event)"></app-roles-grid>
+</div>

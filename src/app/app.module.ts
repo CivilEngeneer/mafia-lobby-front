@@ -17,6 +17,7 @@ import { UsersGridComponent } from "./components/users-grid/users-grid.component
 import { RolesGridComponent } from './components/roles-grid/roles-grid.component';
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatCardModule } from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     MatSelectModule,
     FormsModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
