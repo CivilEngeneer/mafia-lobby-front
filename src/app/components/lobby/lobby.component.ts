@@ -3,18 +3,11 @@ import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { RoleSetting, User } from 'src/app/models/models';
 import { SocketService } from "../../services/socket.service";
 import { GameService } from "../../services/game.service";
-import { AsyncPipe } from "@angular/common";
-import { AppModule } from "../../app.module";
 
 @Component({
-  standalone: true,
   selector: 'app-lobby',
   templateUrl: './lobby.component.html',
   styleUrls: ['./lobby.component.scss'],
-  imports: [
-    AsyncPipe,
-    AppModule
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LobbyComponent implements OnInit {
