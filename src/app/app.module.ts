@@ -18,6 +18,7 @@ import { RolesGridComponent } from './components/roles-grid/roles-grid.component
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatCardModule } from "@angular/material/card";
+import { BaseComponent } from './components/base/base.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatCardModule } from "@angular/material/card";
     NotFoundComponent,
     UsersGridComponent,
     UsersGridComponent,
-    RolesGridComponent
+    RolesGridComponent,
+    BaseComponent
   ],
   imports: [
     BrowserModule,

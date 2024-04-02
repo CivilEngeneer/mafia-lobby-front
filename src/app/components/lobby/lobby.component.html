@@ -1,5 +1,6 @@
-<app-users-grid [users]="(users$ | async) || []" (userChanged)="onUserChanged($event)"></app-users-grid>
+<app-users-grid [users]="game?.users || []" (userChanged)="onUserChanged($event)"></app-users-grid>
 <div class="right-side">
-  <button mat-flat-button  (click)="buttonClick()" [disabled]="isDisabled()">{{ getButtonTitle() }}</button>
-  <app-roles-grid [roleSettings]="(roleSettings$ | async) || []" (onRolesChanged)="onRolesChanged($event)"></app-roles-grid>
+  <button mat-flat-button (click)="startButtonClicked()" [disabled]="isDisabled()">{{ getButtonTitle() }}</button>
+  <button mat-flat-button (click)="closeClicked()" [disabled]="isDisabled()">Close</button>
+  <app-roles-grid [roleSettings]="game?.roleSettings || []" (onRolesChanged)="onRolesChanged($event)"></app-roles-grid>
 </div>

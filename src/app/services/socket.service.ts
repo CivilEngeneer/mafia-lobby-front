@@ -17,17 +17,27 @@ export class SocketService {
   game$ = new BehaviorSubject<Game | undefined>(undefined);
   userId$ = new BehaviorSubject<string>('');
 
+  constructor() {
+    this.socket = io(environment.socketEndpoint, { withCredentials: true });
+    this.error$ = this.setupSocketErrorListeners();
+    this.connected$ = this.monitorConnection();
+    this.socket.on('changed', (game) => {
+      this.game$.next(JSON.parse(game));
+    });
+    this.socket.on('set id', (id) => {
+      this.userId$.next(id.id);
+    });
+    this.connected$.subscribe(v => {
+      if (!v) {
+        this.game$.next(undefined);
+        this.userId$.next('');
+      }
+    });
+  }
+
   createOrJoinGame(userName: string) {
-    if (!this.socket || this.socket.disconnected) {
-      this.socket = io(environment.socketEndpoint, { query: { name: userName }, withCredentials: true });
-      this.error$ = this.setupSocketErrorListeners();
-      this.connected$ = this.monitorConnection();
-      this.socket.on('changed', (game) => {
-        this.game$.next(JSON.parse(game));
-      });
-      this.socket.on('set id', (id) => {
-        this.userId$.next(id.id);
-      });
+    if (this.socket.disconnected) {
+      this.socket.io.opts.query = { name: userName }
       this.socket.connect();
     }
   }
@@ -62,7 +72,7 @@ export class SocketService {
     this.errorSubject = new Subject<string>();
 
     this.socket.on('exception', (error) => {
-      console.log(error.message);
+      this.errorSubject.next('warning' + error);
     })
 
     this.socket.on('error', (error: Error) => {
@@ -96,7 +106,11 @@ export class SocketService {
     this.socket.emit('startGame');
   }
 
-  restartGame(){
+  restartGame() {
     this.socket.emit('restartGame');
+  }
+
+  closeGame() {
+    this.socket.emit('closeGame');
   }
 }

@@ -1,0 +1,4 @@
+<app-lobby *ngIf="game$ | async as game; else elseBlock" [game]="game"></app-lobby>
+<ng-template #elseBlock>
+  <app-join (onConnectClick)="onConnectionClick($event)"></app-join>
+</ng-template>

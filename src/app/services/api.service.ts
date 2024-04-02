@@ -18,12 +18,16 @@ export class ApiService {
   constructor() {
   }
 
-  canActivateRoute(): Observable<PermissionAnswer> {
+  checkUserInGame(): Observable<PermissionAnswer> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<PermissionAnswer>(
       `http://${environment.socketEndpoint}/checkUserInGame`,
       { headers: headers }, { withCredentials: true }
     );
+  }
+
+  isNameUnique(name: string): Observable<boolean> {
+    return this.http.get<boolean>(`http://${environment.socketEndpoint}/isNameUnique/${name}`);
   }
 }
 

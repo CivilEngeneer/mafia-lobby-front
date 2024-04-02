@@ -15,7 +15,7 @@ export class UsersGridComponent {
   @Output() userChanged = new EventEmitter<User>();
 
   get displayedColumns(): string[] {
-    if (this.gameService?.thisUser?.type === "master"){
+    if (this.gameService?.thisUser?.type === "master") {
       return ['position', 'name', 'type', 'role', 'note', 'open'];
     }
     return ['position', 'name', 'type', 'role', 'open'];
