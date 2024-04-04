@@ -15,7 +15,7 @@ export class RolesGridComponent {
   @Output() onRolesChanged = new EventEmitter<RoleSetting[]>();
 
   displayedColumns: string[] = ['role', 'amount', 'remove'];
-  roles: Role[] = ['mafia', 'don', 'peaceful', 'commissar', 'doctor', 'lady', 'maniac'];
+  roles: Role[] = ['mafia', 'don', 'citizen', 'commissar', 'doctor', 'lady', 'maniac'];
 
   shouldHideRole(role: Role) {
     return this.roleSettings.some(x => x.role === role);

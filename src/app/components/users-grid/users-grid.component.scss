@@ -1,25 +1,16 @@
 :host {
-  width: 100%;
-
   .mat-column-position {
-    width: 32px;
-    border-right: 1px solid currentColor;
-    padding-right: 24px;
+    border-right: 1px solid lightgray;
     text-align: center;
   }
 
-  .mat-column-name {
-    padding-left: 16px;
-    font-size: 20px;
-  }
 
-  .mat-column-type {
+  td.mat-column-name {
+    font-size: 1.1rem;
     font-style: italic;
   }
 
-  .mat-column-role {
-    width: 32px;
-    text-align: center;
-    font-weight: bold;
+  .inactive {
+    color: darkgray;
   }
 }

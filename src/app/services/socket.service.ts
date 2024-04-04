@@ -17,27 +17,24 @@ export class SocketService {
   game$ = new BehaviorSubject<Game | undefined>(undefined);
   userId$ = new BehaviorSubject<string>('');
 
-  constructor() {
-    this.socket = io(environment.socketEndpoint, { withCredentials: true });
-    this.error$ = this.setupSocketErrorListeners();
-    this.connected$ = this.monitorConnection();
-    this.socket.on('changed', (game) => {
-      this.game$.next(JSON.parse(game));
-    });
-    this.socket.on('set id', (id) => {
-      this.userId$.next(id.id);
-    });
-    this.connected$.subscribe(v => {
-      if (!v) {
-        this.game$.next(undefined);
-        this.userId$.next('');
-      }
-    });
-  }
-
   createOrJoinGame(userName: string) {
-    if (this.socket.disconnected) {
-      this.socket.io.opts.query = { name: userName }
+    if (!this.socket || this.socket.disconnected) {
+      this.socket = io(environment.socketEndpoint, { query: { name: userName }, withCredentials: true });
+      this.error$ = this.setupSocketErrorListeners();
+      this.connected$ = this.monitorConnection();
+      this.socket.on('changed', (game) => {
+        this.game$.next(JSON.parse(game));
+      });
+      this.socket.on('set id', (id) => {
+        this.userId$.next(id.id);
+      });
+      this.connected$.subscribe(v => {
+        if (!v) {
+          this.game$.next(undefined);
+          this.userId$.next('');
+        }
+      });
+      this.socket.io.opts.withCredentials = true;
       this.socket.connect();
     }
   }
@@ -47,7 +44,7 @@ export class SocketService {
   }
 
   private monitorConnection(): Observable<boolean> {
-    this.connectionSubject = new BehaviorSubject<boolean>(false);
+    this.connectionSubject = new BehaviorSubject<boolean>(!this.socket.disconnected);
 
     this.socket.on('connect', () => {
       this.connectionSubject.next(true);
@@ -58,6 +55,7 @@ export class SocketService {
     });
 
     this.socket.on('disconnect', () => {
+      this.game$.next(undefined);
       this.connectionSubject.next(false);
     });
 
@@ -72,11 +70,11 @@ export class SocketService {
     this.errorSubject = new Subject<string>();
 
     this.socket.on('exception', (error) => {
-      this.errorSubject.next('warning' + error);
+      this.errorSubject.next('warning ' + error?.message);
     })
 
     this.socket.on('error', (error: Error) => {
-      this.errorSubject.next('error ' + error);
+      this.errorSubject.next('error ' + error?.message);
     });
 
     this.socket.on('connect_error', (connectionError: Error) => {

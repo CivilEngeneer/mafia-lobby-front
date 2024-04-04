@@ -18,10 +18,8 @@ export class UsersGridComponent {
     if (this.gameService?.thisUser?.type === "master") {
       return ['position', 'name', 'type', 'role', 'note', 'open'];
     }
-    return ['position', 'name', 'type', 'role', 'open'];
+    return ['position', 'name', 'type', 'role'];
   }
-
-  userTypes: UserType[] = ["master", "player", "observer"];
 
   onUserTypeChanged(value: UserType, user: User) {
     let changedUser = { ...user };
@@ -38,10 +36,6 @@ export class UsersGridComponent {
       return user.role?.toString();
     }
 
-    // if (this.gameService.thisUser?.role?.includes('mafia') && user.role?.includes('mafia')){
-    //   return 'mafia';
-    // }
-
     return "-";
   }
 
@@ -49,17 +43,29 @@ export class UsersGridComponent {
     return this.gameService.thisUser?.id === user.id ? `${user.name}-(You)` : user.name;
   }
 
-  isGameOn(): boolean {
+  isGameInProcess(): boolean {
     return this.gameService.game?.state === "inProcess";
   }
 
-  isMaster(): boolean {
-    return this.gameService.thisUser?.type === 'master';
+  isThisUserMaster() {
+    return this.gameService.isThisUserMaster()
+  }
+
+  isActivePlayer(user:User) {
+    return user?.type === "player" && (!this.isGameInProcess() || !user.opened);
   }
 
   openPlayerCard(user: User) {
     let changedUser = { ...user };
     changedUser.opened = true;
     this.userChanged.emit(changedUser);
+  }
+
+  isMe(user: User) {
+    return this.gameService.thisUser?.id === user.id;
+  }
+
+  getUserTypes(user: User): UserType[] {
+    return  this.isThisUserMaster() || this.gameService.isMaster(user) || !this.gameService.isMasterInGame() ? ["master", "player", "observer"] : ["player", "observer"];
   }
 }

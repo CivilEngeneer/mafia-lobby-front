@@ -19,6 +19,11 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatCardModule } from "@angular/material/card";
 import { BaseComponent } from './components/base/base.component';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatRadioModule } from "@angular/material/radio";
+import { RolesListComponent } from './components/roles-list/roles-list.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,8 @@ import { BaseComponent } from './components/base/base.component';
     UsersGridComponent,
     UsersGridComponent,
     RolesGridComponent,
-    BaseComponent
+    BaseComponent,
+    RolesListComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,11 @@ import { BaseComponent } from './components/base/base.component';
     FormsModule,
     MatIconModule,
     MatTooltipModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

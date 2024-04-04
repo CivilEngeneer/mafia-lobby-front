@@ -18,4 +18,16 @@ export class GameService {
       this.thisUser = game?.users.find(x => x.id === this.userId);
     });
   }
+
+  isMasterInGame(): boolean{
+    return this.game?.users.some(x=>x.type === "master" && x.online) || false;
+  }
+
+  isMaster(user: User): boolean {
+    return user?.type === 'master';
+  }
+
+  isThisUserMaster() {
+    return this.thisUser ? this.isMaster(this.thisUser) : false;
+  }
 }

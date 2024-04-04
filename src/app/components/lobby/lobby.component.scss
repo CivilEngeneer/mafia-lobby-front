@@ -1,8 +1,31 @@
 :host {
-  display: flex;
+  mat-toolbar-row {
+    display: flex;
+    justify-content: flex-end;
 
-}
+    button {
+      margin: 0 .3rem;
+    }
 
-table {
-  width: 80%;
+    mat-icon {
+      margin-right: auto;
+      color: gray;
+    }
+  }
+
+  mat-sidenav-container {
+    height: calc(100% - 65px);
+
+    mat-sidenav-content {
+      padding: 0 10px;
+    }
+  }
+
+  .content {
+    height: 100%;
+    display: flex;
+    background-color: gray;
+    border: 1px solid black;
+    overflow: auto;
+  }
 }

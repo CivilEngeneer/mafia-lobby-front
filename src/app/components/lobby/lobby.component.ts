@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core
 import { Game, RoleSetting, User } from 'src/app/models/models';
 import { SocketService } from "../../services/socket.service";
 import { GameService } from "../../services/game.service";
+import { MatDrawerMode } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-lobby',
@@ -30,16 +31,20 @@ export class LobbyComponent {
     }
   }
 
-  canStart() {
-    return true;
-  }
-
   getButtonTitle() {
-    return this.gameService.game?.state === 'inProcess' ? 'Finish game' : 'Start game';
+    return this.isGameInProcess() ? 'Finish game' : 'Start game';
   }
 
-  isDisabled(): boolean {
-    return this.gameService.thisUser?.type !== 'master';
+  isGameInProcess() {
+    return this.gameService.game?.state === 'inProcess';
+  }
+
+  isThisUserMaster(): boolean {
+    return this.gameService.isThisUserMaster();
+  }
+
+  isMasterInGame(): boolean {
+    return this.gameService.isMasterInGame();
   }
 
   closeClicked() {

@@ -1,6 +1,26 @@
-<app-users-grid [users]="game?.users || []" (userChanged)="onUserChanged($event)"></app-users-grid>
-<div class="right-side">
-  <button mat-flat-button (click)="startButtonClicked()" [disabled]="isDisabled()">{{ getButtonTitle() }}</button>
-  <button mat-flat-button (click)="closeClicked()" [disabled]="isDisabled()">Close</button>
-  <app-roles-grid [roleSettings]="game?.roleSettings || []" (onRolesChanged)="onRolesChanged($event)"></app-roles-grid>
-</div>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <mat-icon>how_to_reg</mat-icon>
+    <button mat-raised-button (click)="startButtonClicked()" [disabled]="!(this.isThisUserMaster() || !this.isMasterInGame())">{{ getButtonTitle() }}</button>
+    <button mat-raised-button (click)="closeClicked()" [disabled]="!isThisUserMaster()">Close</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container autosize>
+  <mat-sidenav opened="true" mode="side" position="end">
+    <ng-container *ngIf="!isGameInProcess() && isThisUserMaster(); else elseBlock">
+      <app-roles-grid [roleSettings]="game?.roleSettings || []" (onRolesChanged)="onRolesChanged($event)"></app-roles-grid>
+    </ng-container>
+    <ng-template #elseBlock>
+      <app-roles-list [roleSettings]="game?.roleSettings || []"></app-roles-list>
+    </ng-template>
+
+  </mat-sidenav>
+  <!--  <div class="content" #main>-->
+  <!--  </div>-->
+  <mat-sidenav-content>
+    <app-users-grid [users]="game?.users || []" (userChanged)="onUserChanged($event)"></app-users-grid>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
